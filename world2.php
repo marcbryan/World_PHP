@@ -37,12 +37,14 @@
           $pw = "@dmIn123";
           $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
 
-          $query = $pdo->prepare("SELECT name FROM country WHERE continent = '$continent'");
+          $query = $pdo->prepare("SELECT name, population FROM country WHERE continent = '$continent'");
           $query -> execute();
-
+          $total_pop = 0;
           while ($row = $query -> fetch()) {
-            echo "<li>".$row['name']."</li>";
+            echo "<li>".$row['name']." - ".$row['population']." hab.</li>";
+            $total_pop += $row['population'];
           }
+          echo "<p>Población de ".$continent.": ".$total_pop." hab.</p>";
 
           unset($pdo);
           unset($query);
